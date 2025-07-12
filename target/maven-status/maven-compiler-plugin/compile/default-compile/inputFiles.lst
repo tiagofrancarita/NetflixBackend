@@ -1,0 +1,14 @@
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\application\usecase\CadastrarUsuarioUseCase.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\config\SecurityConfig.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\domain\exception\RecursoDuplicadoException.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\domain\model\Usuario.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\domain\repository\UsuarioRepository.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\infrastructure\controller\GlobalExceptionHandler.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\infrastructure\controller\UsuarioController.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\infrastructure\persistence\entity\UsuarioEntity.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\infrastructure\persistence\impl\UsuarioRepositoryImpl.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\infrastructure\persistence\jpa\UsuarioJpaRepository.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\interfaces\dto\UsuarioRequest.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\interfaces\dto\UsuarioResponse.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\interfaces\mapper\UsuarioMapper.java
+D:\Repositorios\NetflixBackend\src\main\java\br\com\franca\netflix\NetflixCloneApplication.java
