@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -15,5 +17,8 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
+    private String cpf;
+    private LocalDateTime dataNascimento;
+    private LocalDateTime dataCriacao; // caso precise acessar
 
 }

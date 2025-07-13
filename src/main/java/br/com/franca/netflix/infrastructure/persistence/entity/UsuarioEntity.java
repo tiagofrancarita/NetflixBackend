@@ -30,4 +30,19 @@ public class UsuarioEntity {
     @Column(name = "data_criacao", columnDefinition = "TIMESTAMP")
     private LocalDateTime dataCriacao;
 
+    @Column(unique = true, nullable = false, length = 14)
+    private String cpf;
+
+    @Column(name = "data_nascimento")
+    private LocalDateTime dataNascimento;
+
+    @PrePersist
+    public void prePersist(){
+
+        if (this.dataCriacao == null){
+            this.dataCriacao = LocalDateTime.now();
+        }
+
+    }
+
 }

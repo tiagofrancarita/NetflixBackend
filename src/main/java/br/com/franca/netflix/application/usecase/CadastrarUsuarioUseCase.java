@@ -37,6 +37,8 @@ public class CadastrarUsuarioUseCase {
                     .nome(request.getNome())
                     .email(request.getEmail())
                     .senha(senhaCriptografada)
+                    .cpf(request.getCpf())
+                    .dataNascimento(request.getDataNascimento())
                     .build();
 
             Usuario salvo = usuarioRepository.salvar(usuario);

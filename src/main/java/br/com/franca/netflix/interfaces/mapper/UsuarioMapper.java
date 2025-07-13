@@ -13,6 +13,9 @@ public class UsuarioMapper {
                 .nome(entity.getNome())
                 .email(entity.getEmail())
                 .senha(entity.getSenha())
+                .cpf(entity.getCpf())
+                .dataNascimento(entity.getDataNascimento())
+                .dataCriacao(entity.getDataCriacao())
                 .build();
     }
 
@@ -22,6 +25,8 @@ public class UsuarioMapper {
                 .nome(usuario.getNome())
                 .email(usuario.getEmail())
                 .senha(usuario.getSenha())
+                .cpf(usuario.getCpf())
+                .dataNascimento(usuario.getDataNascimento())
                 .build();
 
 
