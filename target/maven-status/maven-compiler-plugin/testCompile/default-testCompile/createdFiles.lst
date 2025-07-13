@@ -1,5 +1,0 @@
-br\com\franca\netflix\applications\controller\UsuarioControllerValidationTest.class
-br\com\franca\netflix\applications\usecases\CadastrarUsuarioUseCaseTest.class
-br\com\franca\netflix\applications\config\TestSecurityConfig.class
-br\com\franca\netflix\applications\config\UsuarioControllerTestConfig.class
-br\com\franca\netflix\NetflixCloneApplicationTests.class

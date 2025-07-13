@@ -1,9 +1,0 @@
-GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-NetflixClone,br.com.franca.netflix.infrastructure.persistence.impl,UsuarioRepositoryImpl,28,9,0,0,4,4,2,1,2,1
-NetflixClone,br.com.franca.netflix.infrastructure.controller,UsuarioController,0,42,0,0,0,14,0,2,0,2
-NetflixClone,br.com.franca.netflix.infrastructure.controller,GlobalExceptionHandler,126,52,0,0,24,11,4,3,4,3
-NetflixClone,br.com.franca.netflix.interfaces.mapper,UsuarioMapper,30,3,0,0,12,1,2,1,2,1
-NetflixClone,br.com.franca.netflix.application.usecase,CadastrarUsuarioUseCase,0,27,0,2,0,7,0,3,0,2
-NetflixClone,br.com.franca.netflix,NetflixCloneApplication,5,3,0,0,2,1,1,1,1,1
-NetflixClone,br.com.franca.netflix.domain.exception,RecursoDuplicadoException,0,6,0,0,0,2,0,1,0,1
-NetflixClone,br.com.franca.netflix.config,SecurityConfig,0,33,0,0,0,8,0,4,0,4
