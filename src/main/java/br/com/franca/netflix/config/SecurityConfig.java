@@ -2,6 +2,7 @@ package br.com.franca.netflix.config;
 
 
 import br.com.franca.netflix.security.JwtAuthenticationFilter;
+import br.com.franca.netflix.security.RequestLoggingFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,10 +24,13 @@ public class SecurityConfig  {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtProperties jwtProperties;
+    private final RequestLoggingFilter requestLoggingFilter;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, JwtProperties jwtProperties) {
+
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, JwtProperties jwtProperties, RequestLoggingFilter requestLoggingFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.jwtProperties = jwtProperties;
+        this.requestLoggingFilter = requestLoggingFilter;
     }
 
     @Bean

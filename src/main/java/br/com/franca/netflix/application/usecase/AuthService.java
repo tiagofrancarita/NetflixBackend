@@ -5,6 +5,8 @@ import br.com.franca.netflix.domain.model.Usuario;
 import br.com.franca.netflix.domain.repository.UsuarioRepository;
 import br.com.franca.netflix.interfaces.dto.JwtResponseDTO;
 import br.com.franca.netflix.security.JwtTokenProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ public class AuthService {
     private final JwtProperties jwtProperties;
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
 
 
     public AuthService(JwtTokenProvider jwtTokenProvider, JwtProperties jwtProperties, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
@@ -27,15 +31,27 @@ public class AuthService {
     }
 
     public JwtResponseDTO autenticarUsuario(String email, String senha) {
-        Usuario usuario = usuarioRepository.buscarPorEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        logger.info("Iniciando autenticação para o e-mail: {}", email);
+
+        var usuarioOptional = usuarioRepository.buscarPorEmail(email);
+
+        if (usuarioOptional.isEmpty()) {
+            logger.warn("Tentativa de login com e-mail não cadastrado: {}", email);
+            throw new RuntimeException("Usuário não encontrado");
+        }
+
+        Usuario usuario = usuarioOptional.get();
 
         if (!passwordEncoder.matches(senha, usuario.getSenha())) {
+            logger.warn("Senha inválida para o e-mail: {}", email);
             throw new RuntimeException("Senha inválida");
         }
 
         String token = jwtTokenProvider.gerarToken(email);
         Date agora = new Date();
+
+        logger.info("Login bem-sucedido para o e-mail: {}", email);
 
         return new JwtResponseDTO(
                 jwtProperties.getTokenType(),
