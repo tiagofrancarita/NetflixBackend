@@ -1,28 +1,32 @@
 package br.com.franca.netflix.infrastructure.controller;
 
-import br.com.franca.netflix.domain.exception.RecursoDuplicadoException;
+import br.com.franca.netflix.domain.exception.EmailJaCadastradoException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // E-mail já cadastrado
-    @ExceptionHandler(RecursoDuplicadoException.class)
-    public ResponseEntity<Object> handleRecursoDuplicado(RecursoDuplicadoException ex) {
-        Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.CONFLICT.value());
-        body.put("erro", "Conflito de dados");
+
+
+
+    @ExceptionHandler(EmailJaCadastradoException.class)
+    public ResponseEntity<Map<String, Object>> handleEmailDuplicado(EmailJaCadastradoException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("erro", "E-mail já cadastrado");
         body.put("mensagem", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
     // Validações do Bean Validation
@@ -38,6 +42,17 @@ public class GlobalExceptionHandler {
         body.put("status", HttpStatus.BAD_REQUEST.value());
         body.put("erro", "Campos inválidos");
         body.put("mensagens", erros);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleDataIntegrity(DataIntegrityViolationException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("erro", "Violação de integridade");
+        body.put("mensagem", "Erro ao processar dados. Verifique os campos informados.");
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }

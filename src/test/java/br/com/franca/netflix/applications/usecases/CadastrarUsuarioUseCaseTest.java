@@ -2,7 +2,7 @@ package br.com.franca.netflix.applications.usecases;
 
 
 import br.com.franca.netflix.application.usecase.CadastrarUsuarioUseCase;
-import br.com.franca.netflix.domain.exception.RecursoDuplicadoException;
+import br.com.franca.netflix.domain.exception.EmailJaCadastradoException;
 import br.com.franca.netflix.domain.model.Usuario;
 import br.com.franca.netflix.domain.repository.UsuarioRepository;
 import br.com.franca.netflix.infrastructure.persistence.entity.UsuarioEntity;
@@ -78,7 +78,7 @@ public class CadastrarUsuarioUseCaseTest {
         when(usuarioJpaRepository.existsByEmail(usuario.getEmail())).thenReturn(true);
 
         // Act & Assert
-        assertThrows(RecursoDuplicadoException.class, () -> cadastrarUsuarioUseCase.executar(usuario));
+        assertThrows(EmailJaCadastradoException.class, () -> cadastrarUsuarioUseCase.executar(usuario));
         verify(usuarioJpaRepository, never()).save(any());
     }
 }
