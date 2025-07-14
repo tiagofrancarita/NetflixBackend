@@ -29,6 +29,7 @@ public class UsuarioMapper {
                 .senha(usuario.getSenha())
                 .cpf(usuario.getCpf())
                 .dataNascimento(usuario.getDataNascimento())
+                .dataCriacao(usuario.getDataCriacao())
                 .ativo(usuario.getAtivo())
                 .build();
     }
