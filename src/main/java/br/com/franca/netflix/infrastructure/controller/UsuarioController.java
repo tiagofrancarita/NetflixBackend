@@ -1,24 +1,25 @@
 package br.com.franca.netflix.infrastructure.controller;
 
 import br.com.franca.netflix.application.usecase.CadastrarUsuarioUseCase;
+import br.com.franca.netflix.application.usecase.InativarUsuarioUseCase;
 import br.com.franca.netflix.domain.model.Usuario;
+import br.com.franca.netflix.interfaces.dto.MensagemResponse;
 import br.com.franca.netflix.interfaces.dto.UsuarioRequest;
 import br.com.franca.netflix.interfaces.dto.UsuarioResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
     private final CadastrarUsuarioUseCase cadastrarUsuarioUseCase;
+    private final InativarUsuarioUseCase inativarUsuarioUseCase;
 
-    public UsuarioController(CadastrarUsuarioUseCase cadastrarUsuarioUseCase) {
+    public UsuarioController(CadastrarUsuarioUseCase cadastrarUsuarioUseCase, InativarUsuarioUseCase inativarUsuarioUseCase) {
         this.cadastrarUsuarioUseCase = cadastrarUsuarioUseCase;
+        this.inativarUsuarioUseCase = inativarUsuarioUseCase;
     }
 
     @PostMapping("/cadastrar")
@@ -44,5 +45,11 @@ public class UsuarioController {
         usuarioresponse.setAtivo(salvo.getAtivo());
 
         return ResponseEntity.ok(usuarioresponse);
+    }
+
+    @PutMapping("/{email}/inativar")
+    public ResponseEntity<MensagemResponse> inativar(@PathVariable String email) {
+        inativarUsuarioUseCase.executar(email);
+        return ResponseEntity.ok(new MensagemResponse("Usuário inativado com sucesso."));
     }
 }
