@@ -1,5 +1,6 @@
 package br.com.franca.netflix.interfaces.dto;
 
+import br.com.franca.netflix.domain.enums.StatusUsuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,4 +30,6 @@ public class UsuarioRequest {
 
     @NotNull(message = "Data de nascimento é obrigatória")
     private LocalDateTime dataNascimento;
+
+    private StatusUsuario ativo; // opcional
 }

@@ -29,6 +29,7 @@ public class UsuarioController {
                 .senha(request.getSenha())
                 .cpf(request.getCpf())
                 .dataNascimento(request.getDataNascimento())
+                .ativo(request.getAtivo())
                 .build();
 
         Usuario salvo = cadastrarUsuarioUseCase.executar(novo);
@@ -40,6 +41,7 @@ public class UsuarioController {
         usuarioresponse.setCpf(salvo.getCpf());
         usuarioresponse.setDataNascimento(salvo.getDataNascimento());
         usuarioresponse.setDataCriacao(salvo.getDataCriacao());
+        usuarioresponse.setAtivo(salvo.getAtivo());
 
         return ResponseEntity.ok(usuarioresponse);
     }
