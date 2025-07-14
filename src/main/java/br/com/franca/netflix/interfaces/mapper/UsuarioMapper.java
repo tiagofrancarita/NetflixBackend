@@ -1,5 +1,6 @@
 package br.com.franca.netflix.interfaces.mapper;
 
+import br.com.franca.netflix.domain.enums.StatusUsuario;
 import br.com.franca.netflix.domain.model.Usuario;
 import br.com.franca.netflix.infrastructure.persistence.entity.UsuarioEntity;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,10 @@ public class UsuarioMapper {
                 .nome(entity.getNome())
                 .email(entity.getEmail())
                 .senha(entity.getSenha())
+                .cpf(entity.getCpf())
+                .dataNascimento(entity.getDataNascimento())
+                .dataCriacao(entity.getDataCriacao())
+                .ativo(entity.getAtivo())
                 .build();
     }
 
@@ -22,8 +27,9 @@ public class UsuarioMapper {
                 .nome(usuario.getNome())
                 .email(usuario.getEmail())
                 .senha(usuario.getSenha())
+                .cpf(usuario.getCpf())
+                .dataNascimento(usuario.getDataNascimento())
+                .ativo(usuario.getAtivo())
                 .build();
-
-
     }
 }

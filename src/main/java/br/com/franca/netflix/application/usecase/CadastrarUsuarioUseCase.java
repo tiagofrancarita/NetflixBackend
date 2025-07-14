@@ -1,5 +1,6 @@
 package br.com.franca.netflix.application.usecase;
 
+import br.com.franca.netflix.domain.enums.StatusUsuario;
 import br.com.franca.netflix.domain.exception.EmailJaCadastradoException;
 import br.com.franca.netflix.domain.model.Usuario;
 import br.com.franca.netflix.domain.repository.UsuarioRepository;
@@ -17,12 +18,10 @@ public class CadastrarUsuarioUseCase {
 
 
     private final UsuarioRepository usuarioRepository;
-    private final UsuarioJpaRepository usuarioJpaRepository;
     private final PasswordEncoder passwordEncoder;
 
     public CadastrarUsuarioUseCase(UsuarioRepository usuarioRepository, UsuarioJpaRepository usuarioJpaRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
-        this.usuarioJpaRepository = usuarioJpaRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -37,6 +36,9 @@ public class CadastrarUsuarioUseCase {
                     .nome(request.getNome())
                     .email(request.getEmail())
                     .senha(senhaCriptografada)
+                    .cpf(request.getCpf())
+                    .dataNascimento(request.getDataNascimento())
+                    .ativo(request.getAtivo())
                     .build();
 
             Usuario salvo = usuarioRepository.salvar(usuario);

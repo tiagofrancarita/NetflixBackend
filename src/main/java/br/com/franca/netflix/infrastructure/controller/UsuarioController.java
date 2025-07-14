@@ -27,6 +27,9 @@ public class UsuarioController {
                 .nome(request.getNome())
                 .email(request.getEmail())
                 .senha(request.getSenha())
+                .cpf(request.getCpf())
+                .dataNascimento(request.getDataNascimento())
+                .ativo(request.getAtivo())
                 .build();
 
         Usuario salvo = cadastrarUsuarioUseCase.executar(novo);
@@ -35,6 +38,10 @@ public class UsuarioController {
         usuarioresponse.setId(salvo.getId());
         usuarioresponse.setNome(salvo.getNome());
         usuarioresponse.setEmail(salvo.getEmail());
+        usuarioresponse.setCpf(salvo.getCpf());
+        usuarioresponse.setDataNascimento(salvo.getDataNascimento());
+        usuarioresponse.setDataCriacao(salvo.getDataCriacao());
+        usuarioresponse.setAtivo(salvo.getAtivo());
 
         return ResponseEntity.ok(usuarioresponse);
     }

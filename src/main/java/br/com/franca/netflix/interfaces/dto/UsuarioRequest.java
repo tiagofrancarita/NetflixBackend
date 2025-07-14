@@ -1,9 +1,13 @@
 package br.com.franca.netflix.interfaces.dto;
 
+import br.com.franca.netflix.domain.enums.StatusUsuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 
 @Data
@@ -19,4 +23,13 @@ public class UsuarioRequest {
     @NotBlank(message = "Senha é obrigatório")
     @Size(min = 8, message = "A senha deve ter no minímo 8 caracteres")
     private String senha;
+
+    @NotBlank(message = "CPF é obrigatório")
+    @Size(min = 11, max = 14, message = "CPF deve ter entre 11 e 14 caracteres")
+    private String cpf;
+
+    @NotNull(message = "Data de nascimento é obrigatória")
+    private LocalDateTime dataNascimento;
+
+    private StatusUsuario ativo; // opcional
 }
