@@ -18,6 +18,22 @@ public class InativarUsuarioUseCase {
         this.usuarioRepository = usuarioRepository;
     }
 
+    public void inativarPorId(Long id) {
+        Usuario usuario = usuarioRepository.buscarPorId(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + id));
+
+        usuario.setAtivo(StatusUsuario.I);
+        usuarioRepository.salvar(usuario);
+    }
+
+    public void inativarPorCpf(String cpf) {
+        Usuario usuario = usuarioRepository.buscarPorCpf(cpf)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com CPF: " + cpf));
+
+        usuario.setAtivo(StatusUsuario.I);
+        usuarioRepository.salvar(usuario);
+    }
+
     public Usuario executar(String email) {
         Usuario usuario = usuarioRepository.buscarPorEmail(email)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário com e-mail " + email + " não encontrado"));
