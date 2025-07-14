@@ -1,6 +1,7 @@
 package br.com.franca.netflix.application.usecase;
 
 import br.com.franca.netflix.config.JwtProperties;
+import br.com.franca.netflix.domain.enums.StatusUsuario;
 import br.com.franca.netflix.domain.model.Usuario;
 import br.com.franca.netflix.domain.repository.UsuarioRepository;
 import br.com.franca.netflix.interfaces.dto.JwtResponseDTO;
@@ -21,8 +22,6 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
-
-
     public AuthService(JwtTokenProvider jwtTokenProvider, JwtProperties jwtProperties, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.jwtProperties = jwtProperties;
@@ -42,6 +41,11 @@ public class AuthService {
         }
 
         Usuario usuario = usuarioOptional.get();
+
+        if (usuario.getAtivo() != StatusUsuario.A) {
+            logger.warn("Tentativa de login com usuário inativo: {}", email);
+            throw new RuntimeException("Usuário está inativo. Acesso negado.");
+        }
 
         if (!passwordEncoder.matches(senha, usuario.getSenha())) {
             logger.warn("Senha inválida para o e-mail: {}", email);
