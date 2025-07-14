@@ -32,4 +32,14 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return jpaRepository.findByEmail(email).map(mapper::toDomain);
     }
 
+    @Override
+    public Optional<Usuario> buscarPorId(Long id) {
+        return jpaRepository.findById(id).map(mapper::toDomain);
+    }
+
+    @Override
+    public Optional<Usuario> buscarPorCpf(String cpf) {
+        return jpaRepository.findByCpf(cpf).map(mapper::toDomain);
+    }
+
 }

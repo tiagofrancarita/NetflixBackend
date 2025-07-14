@@ -47,9 +47,21 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioresponse);
     }
 
-    @PutMapping("/{email}/inativar")
-    public ResponseEntity<MensagemResponse> inativar(@PathVariable String email) {
+    @PutMapping("/{email}/inativarEmail")
+    public ResponseEntity<MensagemResponse> inativarEmail(@PathVariable String email) {
         inativarUsuarioUseCase.executar(email);
         return ResponseEntity.ok(new MensagemResponse("Usuário inativado com sucesso."));
+    }
+
+    @PutMapping("/{id}/inativarPorId")
+    public ResponseEntity<Void> inativarPorId(@PathVariable Long id) {
+        inativarUsuarioUseCase.inativarPorId(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{cpf}/inativarPorCpf")
+    public ResponseEntity<Void> inativarPorCpf(@PathVariable String cpf) {
+        inativarUsuarioUseCase.inativarPorCpf(cpf);
+        return ResponseEntity.noContent().build();
     }
 }
