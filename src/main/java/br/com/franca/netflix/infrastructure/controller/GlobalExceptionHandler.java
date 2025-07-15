@@ -1,6 +1,7 @@
 package br.com.franca.netflix.infrastructure.controller;
 
 import br.com.franca.netflix.domain.exception.EmailJaCadastradoException;
+import br.com.franca.netflix.domain.exception.TokenExpiradoException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,16 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(TokenExpiradoException.class)
+    public ResponseEntity<?> handleTokenExpirado(TokenExpiradoException ex) {
+        Map<String, Object> erro = new HashMap<>();
+        erro.put("erro", "Token expirado");
+        erro.put("mensagem", ex.getMessage());
+        erro.put("status", 401);
+        erro.put("timestamp", LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(erro);
+    }
 
     @ExceptionHandler(EmailJaCadastradoException.class)
     public ResponseEntity<Map<String, Object>> handleEmailDuplicado(EmailJaCadastradoException ex) {

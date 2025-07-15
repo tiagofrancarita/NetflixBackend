@@ -1,12 +1,13 @@
 package br.com.franca.netflix.security;
 
 import br.com.franca.netflix.config.JwtProperties;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import br.com.franca.netflix.domain.exception.TokenExpiradoException;
+import br.com.franca.netflix.domain.exception.TokenInvalidoException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -15,6 +16,9 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
+
 
     private final JwtProperties jwtProperties;
     private Key scretKey;
@@ -43,16 +47,23 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public boolean validarToken (String token){
-
+    public boolean validarToken(String token){
         try {
-            Jwts.parserBuilder().setSigningKey(scretKey).build().parseClaimsJwt(token);
-            return true;
-        }catch (JwtException | IllegalArgumentException exception){
-            // mensagem de log
-            return false;
-        }
+            Jwts.parserBuilder()
+                    .setSigningKey(scretKey)
+                    .build()
+                    .parseClaimsJws(token); // parse completo com assinatura
 
+            return true;
+
+        } catch (ExpiredJwtException e) {
+            logger.warn("Token expirado: {}", e.getMessage());
+            throw new TokenExpiradoException("Token expirado. Faça login novamente.");
+
+        } catch (JwtException | IllegalArgumentException e) {
+            logger.error("Token inválido: {}", e.getMessage());
+            throw new TokenInvalidoException("Token inválido.");
+        }
     }
 
     public String getUsernameToken(String token){
