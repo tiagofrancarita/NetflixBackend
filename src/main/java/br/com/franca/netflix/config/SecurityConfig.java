@@ -38,9 +38,16 @@ public class SecurityConfig  {
 
                 http
                  .csrf(csrf -> csrf.disable()) //Desabilita csrf para facilitar testes
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST,"/auth/login").permitAll() // libera acesso
-                        .anyRequest().authenticated() // exige autenticacao para os demais
+                        .authorizeHttpRequests(auth -> auth
+                                .requestMatchers(
+                                        "/auth/login",
+                                        "/auth/login",
+                                        "/swagger-ui.html",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**",
+                                        "/webjars/**"
+                                ).permitAll()
+                                .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .oauth2ResourceServer(oauth2 -> oauth2
