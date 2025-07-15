@@ -7,39 +7,51 @@ import br.com.franca.netflix.infrastructure.persistence.jpa.UsuarioJpaRepository
 import br.com.franca.netflix.interfaces.mapper.UsuarioMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class UsuarioRepositoryImpl implements UsuarioRepository {
 
-    private final UsuarioJpaRepository jpaRepository;
+    private final UsuarioJpaRepository usuarioJpaRepository;
     private final UsuarioMapper mapper;
 
-    public UsuarioRepositoryImpl(UsuarioJpaRepository jpaRepository, UsuarioMapper mapper) {
-        this.jpaRepository = jpaRepository;
+    public UsuarioRepositoryImpl(UsuarioJpaRepository usuarioJpaRepository, UsuarioMapper mapper) {
+        this.usuarioJpaRepository = usuarioJpaRepository;
         this.mapper = mapper;
     }
 
     @Override
     public Usuario salvar(Usuario usuario) {
         UsuarioEntity entity = mapper.toEntity(usuario);
-        UsuarioEntity salvo = jpaRepository.save(entity);
+        UsuarioEntity salvo = usuarioJpaRepository.save(entity);
         return mapper.toDomain(salvo);
     }
 
     @Override
     public Optional<Usuario> buscarPorEmail(String email) {
-        return jpaRepository.findByEmail(email).map(mapper::toDomain);
+        return usuarioJpaRepository.findByEmail(email).map(mapper::toDomain);
+    }
+
+    @Override
+    public List<Usuario> buscarPorNome(String nome) {
+        return usuarioJpaRepository.findByNomeContainingIgnoreCase(nome).stream().map(mapper::toDomain).collect(Collectors.toList());
     }
 
     @Override
     public Optional<Usuario> buscarPorId(Long id) {
-        return jpaRepository.findById(id).map(mapper::toDomain);
+        return usuarioJpaRepository.findById(id).map(mapper::toDomain);
     }
 
     @Override
     public Optional<Usuario> buscarPorCpf(String cpf) {
-        return jpaRepository.findByCpf(cpf).map(mapper::toDomain);
+        return usuarioJpaRepository.findByCpf(cpf).map(mapper::toDomain);
+    }
+
+    @Override
+    public List<Usuario> listarTodos() {
+        return usuarioJpaRepository.findAll().stream().map(mapper::toDomain).collect(Collectors.toList());
     }
 
 }

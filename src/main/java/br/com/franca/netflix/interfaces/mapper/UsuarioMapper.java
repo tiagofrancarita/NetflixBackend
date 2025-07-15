@@ -5,6 +5,9 @@ import br.com.franca.netflix.infrastructure.persistence.entity.UsuarioEntity;
 import br.com.franca.netflix.interfaces.dto.UsuarioResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class UsuarioMapper {
 
@@ -44,5 +47,11 @@ public class UsuarioMapper {
         response.setDataNascimento(usuario.getDataNascimento());
         response.setDataCriacao(usuario.getDataCriacao());
         return response;
+    }
+
+    public List<UsuarioResponse> toResponseList(List<Usuario> usuarios) {
+        return usuarios.stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 }

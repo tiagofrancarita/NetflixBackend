@@ -1,8 +1,6 @@
 package br.com.franca.netflix.infrastructure.controller;
 
-import br.com.franca.netflix.application.usecase.AtualizarUsuarioUseCase;
-import br.com.franca.netflix.application.usecase.CadastrarUsuarioUseCase;
-import br.com.franca.netflix.application.usecase.InativarUsuarioUseCase;
+import br.com.franca.netflix.application.usecase.*;
 import br.com.franca.netflix.domain.model.Usuario;
 import br.com.franca.netflix.interfaces.dto.AtualizarUsuarioRequest;
 import br.com.franca.netflix.interfaces.dto.MensagemResponse;
@@ -15,6 +13,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -22,12 +22,71 @@ public class UsuarioController {
     private final CadastrarUsuarioUseCase cadastrarUsuarioUseCase;
     private final InativarUsuarioUseCase inativarUsuarioUseCase;
     private final AtualizarUsuarioUseCase atualizarUsuarioUseCase;
+    private final ListarUsuariosUseCase listarUsuariosUseCase;
+    private final BuscarUsuarioUseCase buscarUsuarioUseCase;
 
 
-    public UsuarioController(CadastrarUsuarioUseCase cadastrarUsuarioUseCase, InativarUsuarioUseCase inativarUsuarioUseCase, AtualizarUsuarioUseCase atualizarUsuarioUseCase) {
+    public UsuarioController(CadastrarUsuarioUseCase cadastrarUsuarioUseCase, InativarUsuarioUseCase inativarUsuarioUseCase, AtualizarUsuarioUseCase atualizarUsuarioUseCase, ListarUsuariosUseCase listarUsuariosUseCase, BuscarUsuarioUseCase buscarUsuarioUseCase) {
         this.cadastrarUsuarioUseCase = cadastrarUsuarioUseCase;
         this.inativarUsuarioUseCase = inativarUsuarioUseCase;
         this.atualizarUsuarioUseCase = atualizarUsuarioUseCase;
+        this.listarUsuariosUseCase = listarUsuariosUseCase;
+        this.buscarUsuarioUseCase = buscarUsuarioUseCase;
+    }
+
+    @GetMapping("/listarTodos")
+    @Operation(summary = "Listar todos os usuarios")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Listagem bem-sucedida"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor"),
+            @ApiResponse(responseCode = "400", description = "Erro na listagem")
+    })
+    public ResponseEntity<List<UsuarioResponse>> listarTodos() {
+        return ResponseEntity.ok(listarUsuariosUseCase.listarTodos());
+    }
+
+    @GetMapping("/buscarPorId/{id}")
+    @Operation(summary = "Busca usuario por id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "busca bem-sucedida"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor"),
+            @ApiResponse(responseCode = "400", description = "Erro na busca")
+    })
+    public ResponseEntity<UsuarioResponse> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(buscarUsuarioUseCase.buscarPorId(id));
+    }
+
+    @GetMapping("/buscarPorEmail")
+    @Operation(summary = "Busca usuario por email")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "busca bem-sucedida"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor"),
+            @ApiResponse(responseCode = "400", description = "Erro na busca")
+    })
+    public ResponseEntity<UsuarioResponse> buscarPorEmail(@RequestParam String email) {
+        return ResponseEntity.ok(buscarUsuarioUseCase.buscarPorEmail(email));
+    }
+
+    @GetMapping("/buscarPorCpf/{cpf}")
+    @Operation(summary = "Busca usuario por cpf")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "busca bem-sucedida"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor"),
+            @ApiResponse(responseCode = "400", description = "Erro na busca")
+    })
+    public ResponseEntity<UsuarioResponse> buscarPorCpf(@PathVariable String cpf) {
+        return ResponseEntity.ok(buscarUsuarioUseCase.buscarPorCpf(cpf));
+    }
+
+    @GetMapping("/buscarPorNome")
+    @Operation(summary = "Busca usuario por nome")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "busca bem-sucedida"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor"),
+            @ApiResponse(responseCode = "400", description = "Erro na busca")
+    })
+    public ResponseEntity<List<UsuarioResponse>> buscarPorNome(@RequestParam String nome) {
+        return ResponseEntity.ok(buscarUsuarioUseCase.buscarPorNome(nome));
     }
 
     @PostMapping("/cadastrar")
@@ -48,7 +107,6 @@ public class UsuarioController {
                 .build();
 
         Usuario salvo = cadastrarUsuarioUseCase.executar(novo);
-
         UsuarioResponse usuarioresponse = new UsuarioResponse();
         usuarioresponse.setId(salvo.getId());
         usuarioresponse.setNome(salvo.getNome());
