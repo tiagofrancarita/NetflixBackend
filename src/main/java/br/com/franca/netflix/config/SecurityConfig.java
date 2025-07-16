@@ -37,11 +37,11 @@ public class SecurityConfig  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
 
                 http
-                 .csrf(csrf -> csrf.disable()) //Desabilita csrf para facilitar testes
+                 .csrf(csrf -> csrf.disable())
                         .authorizeHttpRequests(auth -> auth
                                 .requestMatchers(
                                         "/auth/login",
-                                        "/auth/login",
+                                        "/auth/refresh",
                                         "/swagger-ui.html",
                                         "/swagger-ui/**",
                                         "/v3/api-docs/**",

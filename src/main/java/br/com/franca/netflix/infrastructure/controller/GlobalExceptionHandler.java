@@ -16,6 +16,11 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<?> handleRuntimeException(RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("erro", e.getMessage()));
+    }
+
     @ExceptionHandler(TokenExpiradoException.class)
     public ResponseEntity<?> handleTokenExpirado(TokenExpiradoException ex) {
         Map<String, Object> erro = new HashMap<>();
