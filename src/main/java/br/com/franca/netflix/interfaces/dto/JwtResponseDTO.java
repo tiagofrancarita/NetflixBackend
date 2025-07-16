@@ -13,13 +13,17 @@ public class JwtResponseDTO {
     private String accessToken; // token JWT
     private String encryptKey;
     private String signKey;
+    private String refreshToken; // novo campo
+
 
     // Construtor completo
-    public JwtResponseDTO(String tokenType, long expiresIn, Date consentedOn, String accessToken, String encryptKey, String signKey) {
+    public JwtResponseDTO(String tokenType, long expiresIn, Date consentedOn,
+                          String accessToken, String refreshToken, String encryptKey, String signKey) {
         this.tokenType = tokenType;
         this.expiresIn = expiresIn;
         this.consentedOn = consentedOn;
         this.accessToken = accessToken;
+        this.refreshToken = refreshToken;    // corrigido aqui
         this.encryptKey = encryptKey;
         this.signKey = signKey;
     }

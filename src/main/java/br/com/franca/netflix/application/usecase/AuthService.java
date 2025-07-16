@@ -2,16 +2,20 @@ package br.com.franca.netflix.application.usecase;
 
 import br.com.franca.netflix.config.JwtProperties;
 import br.com.franca.netflix.domain.enums.StatusUsuario;
+import br.com.franca.netflix.domain.model.RefreshToken;
 import br.com.franca.netflix.domain.model.Usuario;
+import br.com.franca.netflix.domain.repository.RefreshTokenRepository;
 import br.com.franca.netflix.domain.repository.UsuarioRepository;
 import br.com.franca.netflix.interfaces.dto.JwtResponseDTO;
 import br.com.franca.netflix.security.JwtTokenProvider;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -20,15 +24,18 @@ public class AuthService {
     private final JwtProperties jwtProperties;
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RefreshTokenRepository refreshTokenRepository;
     private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
-    public AuthService(JwtTokenProvider jwtTokenProvider, JwtProperties jwtProperties, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(JwtTokenProvider jwtTokenProvider, JwtProperties jwtProperties, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, RefreshTokenRepository refreshTokenRepository) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.jwtProperties = jwtProperties;
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.refreshTokenRepository = refreshTokenRepository;
     }
 
+    @Transactional
     public JwtResponseDTO autenticarUsuario(String email, String senha) {
 
         logger.info("Iniciando autenticação para o e-mail: {}", email);
@@ -52,16 +59,39 @@ public class AuthService {
             throw new RuntimeException("Senha inválida");
         }
 
-        String token = jwtTokenProvider.gerarToken(email);
+        String accessToken = jwtTokenProvider.gerarToken(email);
+
+        // Antes de gerar novo token
+        refreshTokenRepository.deletarPorEmail(email); // <- ADICIONE ISSO AQUI
+
+        // Gerar refresh token único
+        String refreshTokenStr = UUID.randomUUID().toString();
+
+        // Definir expiração para refresh token (exemplo 7 dias)
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        var refreshTokenExpiry = calendar.getTime();
+
+        // Criar e salvar o RefreshToken
+        RefreshToken refreshToken = RefreshToken.builder()
+                .token(refreshTokenStr)
+                .email(email)
+                .dataExpiracao(refreshTokenExpiry)
+                .build();
+
+        refreshTokenRepository.salvar(refreshToken);
+
         Date agora = new Date();
 
         logger.info("Login bem-sucedido para o e-mail: {}", email);
 
+        // Retorna o DTO com accessToken e refreshToken
         return new JwtResponseDTO(
                 jwtProperties.getTokenType(),
                 jwtProperties.getExpiration(),
                 agora,
-                token,
+                accessToken,
+                refreshTokenStr,               // novo parâmetro: refreshToken
                 jwtProperties.getEncryptKey(),
                 jwtProperties.getSignKey()
         );
