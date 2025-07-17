@@ -1,7 +1,6 @@
 package br.com.franca.netflix.domain.repository;
 
 import br.com.franca.netflix.domain.model.Usuario;
-
 import java.util.List;
 import java.util.Optional;
 

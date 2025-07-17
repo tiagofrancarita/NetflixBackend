@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 import java.time.Instant;
 
@@ -30,9 +29,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
 
         logger.info("[" + timestamp + "] " + method + " " + path + " - Usuário: " + usuario);
 
-
         filterChain.doFilter(request, response);
-
 
     }
 }

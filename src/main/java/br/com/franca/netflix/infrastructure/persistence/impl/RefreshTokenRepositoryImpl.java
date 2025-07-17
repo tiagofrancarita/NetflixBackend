@@ -6,7 +6,6 @@ import br.com.franca.netflix.infrastructure.persistence.entity.RefreshTokenEntit
 import br.com.franca.netflix.infrastructure.persistence.jpa.RefreshTokenJpaRepository;
 import br.com.franca.netflix.interfaces.mapper.RefreshTokenMapper;
 import org.springframework.stereotype.Component;
-
 import java.util.Optional;
 
 @Component

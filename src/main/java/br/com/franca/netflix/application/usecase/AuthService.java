@@ -7,10 +7,12 @@ import br.com.franca.netflix.domain.model.Usuario;
 import br.com.franca.netflix.domain.repository.RefreshTokenRepository;
 import br.com.franca.netflix.domain.repository.UsuarioRepository;
 import br.com.franca.netflix.interfaces.dto.JwtResponseDTO;
+import br.com.franca.netflix.security.CustomUserDetailsService;
 import br.com.franca.netflix.security.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Calendar;
@@ -20,6 +22,7 @@ import java.util.UUID;
 @Service
 public class AuthService {
 
+    private final CustomUserDetailsService customUserDetailsService;
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtProperties jwtProperties;
     private final UsuarioRepository usuarioRepository;
@@ -27,7 +30,8 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
     private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
-    public AuthService(JwtTokenProvider jwtTokenProvider, JwtProperties jwtProperties, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, RefreshTokenRepository refreshTokenRepository) {
+    public AuthService(CustomUserDetailsService customUserDetailsService, JwtTokenProvider jwtTokenProvider, JwtProperties jwtProperties, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, RefreshTokenRepository refreshTokenRepository) {
+        this.customUserDetailsService = customUserDetailsService;
         this.jwtTokenProvider = jwtTokenProvider;
         this.jwtProperties = jwtProperties;
         this.usuarioRepository = usuarioRepository;
@@ -59,7 +63,8 @@ public class AuthService {
             throw new RuntimeException("Senha inválida");
         }
 
-        String accessToken = jwtTokenProvider.gerarToken(email);
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+        String accessToken = jwtTokenProvider.gerarToken(userDetails);
 
         // Antes de gerar novo token
         refreshTokenRepository.deletarPorEmail(email); // <- ADICIONE ISSO AQUI

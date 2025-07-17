@@ -3,10 +3,11 @@ package br.com.franca.netflix.application.usecase;
 import br.com.franca.netflix.domain.model.RefreshToken;
 import br.com.franca.netflix.domain.repository.RefreshTokenRepository;
 import br.com.franca.netflix.interfaces.dto.RefreshTokenResponseDTO;
+import br.com.franca.netflix.security.CustomUserDetailsService;
 import br.com.franca.netflix.security.JwtTokenProvider;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -14,10 +15,12 @@ import java.util.UUID;
 @Service
 public class RefreshTokenUseCase {
 
+    private final CustomUserDetailsService customUserDetailsService;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public RefreshTokenUseCase(JwtTokenProvider jwtTokenProvider, RefreshTokenRepository refreshTokenRepository) {
+    public RefreshTokenUseCase(CustomUserDetailsService customUserDetailsService, JwtTokenProvider jwtTokenProvider, RefreshTokenRepository refreshTokenRepository) {
+        this.customUserDetailsService = customUserDetailsService;
         this.jwtTokenProvider = jwtTokenProvider;
         this.refreshTokenRepository = refreshTokenRepository;
     }
@@ -33,7 +36,8 @@ public class RefreshTokenUseCase {
         }
 
         // Gerar novo access token
-        String novoAccessToken = jwtTokenProvider.gerarToken(token.getEmail());
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(token.getEmail());
+        String novoAccessToken = jwtTokenProvider.gerarToken(userDetails);
 
         // Gerar novo refresh token com validade de 7 dias
         String novoRefreshTokenStr = UUID.randomUUID().toString();

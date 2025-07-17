@@ -42,7 +42,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
-    // Validações do Bean Validation
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidacoes(MethodArgumentNotValidException ex) {
         Map<String, String> erros = new HashMap<>();
@@ -70,7 +69,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
-    // 3. NullPointerException
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<Object> handleNullPointer(NullPointerException ex) {
         Map<String, Object> body = new HashMap<>();
@@ -82,7 +80,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
 
-    // 4. Problemas no banco de dados (DataAccessException do Spring)
     @ExceptionHandler(org.springframework.dao.DataAccessException.class)
     public ResponseEntity<Object> handleDatabaseError(org.springframework.dao.DataAccessException ex) {
         Map<String, Object> body = new HashMap<>();
@@ -94,7 +91,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
 
-    // Erros genéricos
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleErroGeral(Exception ex) {
         Map<String, Object> body = new HashMap<>();
@@ -105,5 +101,4 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
-
 }

@@ -1,8 +1,7 @@
 package br.com.franca.netflix.interfaces.dto;
 
 import br.com.franca.netflix.domain.enums.StatusUsuario;
-import lombok.Data;
-
+import lombok.*;
 import java.time.LocalDateTime;
 
 @Data

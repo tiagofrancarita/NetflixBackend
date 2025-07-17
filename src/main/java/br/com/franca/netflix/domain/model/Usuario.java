@@ -1,11 +1,7 @@
 package br.com.franca.netflix.domain.model;
 
 import br.com.franca.netflix.domain.enums.StatusUsuario;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -22,6 +18,5 @@ public class Usuario {
     private LocalDateTime dataNascimento;
     private LocalDateTime dataCriacao; // caso precise acessar
     private StatusUsuario ativo;
-
 
 }

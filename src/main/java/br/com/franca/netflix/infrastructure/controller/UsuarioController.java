@@ -11,8 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -35,6 +35,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/listarTodos")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @Operation(summary = "Listar todos os usuarios")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Listagem bem-sucedida"),
@@ -42,10 +43,12 @@ public class UsuarioController {
             @ApiResponse(responseCode = "400", description = "Erro na listagem")
     })
     public ResponseEntity<List<UsuarioResponse>> listarTodos() {
+        System.out.println("Entrou no listarTodos do controller");
         return ResponseEntity.ok(listarUsuariosUseCase.listarTodos());
     }
 
     @GetMapping("/buscarPorId/{id}")
+    @PreAuthorize("hasRole('ADMIN') or (hasRole('USER'))")
     @Operation(summary = "Busca usuario por id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "busca bem-sucedida"),
@@ -57,6 +60,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/buscarPorEmail")
+    @PreAuthorize("hasRole('ADMIN') or (hasRole('USER'))")
     @Operation(summary = "Busca usuario por email")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "busca bem-sucedida"),
@@ -68,6 +72,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/buscarPorCpf/{cpf}")
+    @PreAuthorize("hasRole('ADMIN') or (hasRole('USER'))")
     @Operation(summary = "Busca usuario por cpf")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "busca bem-sucedida"),
@@ -79,6 +84,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/buscarPorNome")
+    @PreAuthorize("hasRole('ADMIN') or (hasRole('USER'))")
     @Operation(summary = "Busca usuario por nome")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "busca bem-sucedida"),
@@ -90,6 +96,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/cadastrar")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Cadastro de usuario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Cadastro bem-sucedida"),
@@ -120,6 +127,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{email}/inativarEmail")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Inativa um usuário pelo e-mail")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Inativação bem-sucedida"),
@@ -132,6 +140,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}/inativarPorId")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Inativa um usuário pelo id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Inativação bem-sucedida"),
@@ -143,6 +152,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{cpf}/inativarPorCpf")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Inativa um usuário pelo cpf")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Inativação bem-sucedida"),
@@ -154,6 +164,7 @@ public class UsuarioController {
     }
 
     @PutMapping("atualizar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Atualiza um usuário pelo ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Atualização bem-sucedida"),
