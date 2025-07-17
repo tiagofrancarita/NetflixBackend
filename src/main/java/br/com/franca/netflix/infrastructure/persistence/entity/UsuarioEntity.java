@@ -2,12 +2,9 @@ package br.com.franca.netflix.infrastructure.persistence.entity;
 
 import br.com.franca.netflix.domain.enums.StatusUsuario;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Table(name = "usuarios")
@@ -25,7 +22,6 @@ public class UsuarioEntity {
 
     @Column(unique = true)
     private String email;
-
     private String senha;
 
     @Column(name = "data_criacao", columnDefinition = "TIMESTAMP")
@@ -40,6 +36,11 @@ public class UsuarioEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "ativo", nullable = false, length = 1)
     private StatusUsuario ativo;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<RoleEntity> roles = new HashSet<>();
 
     @PrePersist
     public void prePersist(){

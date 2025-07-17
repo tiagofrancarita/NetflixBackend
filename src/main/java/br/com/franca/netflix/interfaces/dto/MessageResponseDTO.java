@@ -3,9 +3,9 @@ package br.com.franca.netflix.interfaces.dto;
 import lombok.*;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class RefreshTokenRequestDTO {
+@NoArgsConstructor
+public class MessageResponseDTO {
 
-    private String refreshToken;
+    private String message;
 }
