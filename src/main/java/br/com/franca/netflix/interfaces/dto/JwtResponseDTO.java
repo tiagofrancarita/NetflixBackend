@@ -1,7 +1,6 @@
 package br.com.franca.netflix.interfaces.dto;
 
 import lombok.Data;
-
 import java.util.Date;
 
 @Data
@@ -27,5 +26,4 @@ public class JwtResponseDTO {
         this.encryptKey = encryptKey;
         this.signKey = signKey;
     }
-
 }

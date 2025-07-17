@@ -6,7 +6,6 @@ import br.com.franca.netflix.infrastructure.persistence.entity.UsuarioEntity;
 import br.com.franca.netflix.infrastructure.persistence.jpa.UsuarioJpaRepository;
 import br.com.franca.netflix.interfaces.mapper.UsuarioMapper;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,5 +52,4 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     public List<Usuario> listarTodos() {
         return usuarioJpaRepository.findAll().stream().map(mapper::toDomain).collect(Collectors.toList());
     }
-
 }

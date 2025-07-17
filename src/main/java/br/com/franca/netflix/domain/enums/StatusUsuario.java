@@ -14,6 +14,4 @@ public enum StatusUsuario {
     public String getDescricao() {
         return descricao;
     }
-
-
 }

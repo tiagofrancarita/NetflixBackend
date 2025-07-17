@@ -4,7 +4,6 @@ import br.com.franca.netflix.domain.repository.UsuarioRepository;
 import br.com.franca.netflix.interfaces.dto.UsuarioResponse;
 import br.com.franca.netflix.interfaces.mapper.UsuarioMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -19,6 +18,8 @@ public class ListarUsuariosUseCase {
     }
 
     public List<UsuarioResponse> listarTodos() {
+        var usuarios = usuarioRepository.listarTodos();
+        System.out.println("Usuarios encontrados: " + usuarios.size());
         return usuarioMapper.toResponseList(usuarioRepository.listarTodos());
     }
 }

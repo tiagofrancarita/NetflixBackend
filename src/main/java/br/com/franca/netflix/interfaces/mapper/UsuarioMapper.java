@@ -4,7 +4,6 @@ import br.com.franca.netflix.domain.model.Usuario;
 import br.com.franca.netflix.infrastructure.persistence.entity.UsuarioEntity;
 import br.com.franca.netflix.interfaces.dto.UsuarioResponse;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
