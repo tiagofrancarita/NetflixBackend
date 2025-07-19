@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 public class CadastrarUsuarioUseCase {
 
     private static final Logger logger = LoggerFactory.getLogger(CadastrarUsuarioUseCase.class);
-
-
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
 
