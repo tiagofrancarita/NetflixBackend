@@ -1,0 +1,330 @@
+Listagem de caminhos de pasta para o volume Dados
+O número de série do volume é F04C-B3F1
+D:.
+|   .gitattributes
+|   .gitignore
+|   estrutura.txt
+|   HELP.md
+|   LICENSE
+|   mvnw
+|   mvnw.cmd
+|   pom.xml
+|   README.md
+|   
++---.idea
+|   |   .gitignore
+|   |   aws.xml
+|   |   compiler.xml
+|   |   diff-generator.xml
+|   |   encodings.xml
+|   |   jarRepositories.xml
+|   |   kotlinc.xml
+|   |   misc.xml
+|   |   vcs.xml
+|   |   workspace.xml
+|   |   
+|   \---inspectionProfiles
+|           Project_Default.xml
+|           
++---.mvn
+|   \---wrapper
+|           maven-wrapper.properties
+|           
++---src
+|   +---main
+|   |   +---java
+|   |   |   \---br
+|   |   |       \---com
+|   |   |           \---franca
+|   |   |               \---netflix
+|   |   |                   |   NetflixCloneApplication.java
+|   |   |                   |   
+|   |   |                   +---application
+|   |   |                   |   +---test
+|   |   |                   |   \---usecase
+|   |   |                   |           AtualizarUsuarioUseCase.java
+|   |   |                   |           AuthService.java
+|   |   |                   |           BuscarUsuarioUseCase.java
+|   |   |                   |           CadastrarUsuarioUseCase.java
+|   |   |                   |           InativarUsuarioUseCase.java
+|   |   |                   |           ListarUsuariosUseCase.java
+|   |   |                   |           RefreshTokenUseCase.java
+|   |   |                   |           
+|   |   |                   +---config
+|   |   |                   |       JwtProperties.java
+|   |   |                   |       SecurityConfig.java
+|   |   |                   |       SwaggerConfig.java
+|   |   |                   |       
+|   |   |                   +---domain
+|   |   |                   |   +---enums
+|   |   |                   |   |       StatusUsuario.java
+|   |   |                   |   |       
+|   |   |                   |   +---exception
+|   |   |                   |   |       EmailJaCadastradoException.java
+|   |   |                   |   |       TokenExpiradoException.java
+|   |   |                   |   |       TokenInvalidoException.java
+|   |   |                   |   |       UsuarioNaoEncontradoException.java
+|   |   |                   |   |       
+|   |   |                   |   +---model
+|   |   |                   |   |       RefreshToken.java
+|   |   |                   |   |       Role.java
+|   |   |                   |   |       Usuario.java
+|   |   |                   |   |       
+|   |   |                   |   \---repository
+|   |   |                   |           RefreshTokenRepository.java
+|   |   |                   |           RoleRepository.java
+|   |   |                   |           UsuarioRepository.java
+|   |   |                   |           
+|   |   |                   +---infrastructure
+|   |   |                   |   +---controller
+|   |   |                   |   |       AuthController.java
+|   |   |                   |   |       GlobalExceptionHandler.java
+|   |   |                   |   |       UsuarioController.java
+|   |   |                   |   |       
+|   |   |                   |   \---persistence
+|   |   |                   |       +---entity
+|   |   |                   |       |       RefreshTokenEntity.java
+|   |   |                   |       |       RoleEntity.java
+|   |   |                   |       |       UsuarioEntity.java
+|   |   |                   |       |       
+|   |   |                   |       +---impl
+|   |   |                   |       |       RefreshTokenRepositoryImpl.java
+|   |   |                   |       |       RoleRepositoryImpl.java
+|   |   |                   |       |       UsuarioRepositoryImpl.java
+|   |   |                   |       |       
+|   |   |                   |       \---jpa
+|   |   |                   |               RefreshTokenJpaRepository.java
+|   |   |                   |               RoleJpaRepository.java
+|   |   |                   |               UsuarioJpaRepository.java
+|   |   |                   |               
+|   |   |                   +---interfaces
+|   |   |                   |   +---dto
+|   |   |                   |   |       AtualizarUsuarioRequest.java
+|   |   |                   |   |       JwtResponseDTO.java
+|   |   |                   |   |       LoginRequest.java
+|   |   |                   |   |       MensagemResponse.java
+|   |   |                   |   |       MessageResponseDTO.java
+|   |   |                   |   |       RefreshTokenRequestDTO.java
+|   |   |                   |   |       RefreshTokenResponseDTO.java
+|   |   |                   |   |       UsuarioRequest.java
+|   |   |                   |   |       UsuarioResponse.java
+|   |   |                   |   |       
+|   |   |                   |   \---mapper
+|   |   |                   |           RefreshTokenMapper.java
+|   |   |                   |           RoleMapper.java
+|   |   |                   |           UsuarioMapper.java
+|   |   |                   |           
+|   |   |                   \---security
+|   |   |                           CustomAccessDeniedHandler.java
+|   |   |                           CustomUserDetailsService.java
+|   |   |                           JwtAuthenticationFilter.java
+|   |   |                           JwtTokenProvider.java
+|   |   |                           RequestLoggingFilter.java
+|   |   |                           
+|   |   \---resources
+|   |       |   application-dev.properties
+|   |       |   application-hml.properties
+|   |       |   application-prod.properties
+|   |       |   application-test.properties
+|   |       |   application.properties
+|   |       |   
+|   |       \---db
+|   |           \---migration
+|   |                   V10__create_table_refresh_token.sql
+|   |                   V11__insert_table_roles.sql
+|   |                   V12__insert_table_user_roles.sql
+|   |                   V13__insert_table_category.sql
+|   |                   V1__create_usuarios_and_roles.sql
+|   |                   V2__create_perfis.sql
+|   |                   V3__create_categorias_and_filmes.sql
+|   |                   V4__create_historico_visualizacao.sql
+|   |                   V5__insert_roles.sql
+|   |                   V6__add_column_cpf_data_nascimento.sql
+|   |                   V7__modify_column_data_criacao.sql
+|   |                   V8__modify_column_dt_criacao.sql
+|   |                   V9__create_column_ativa.sql
+|   |                   
+|   \---test
+|       +---java
+|       |   \---br
+|       |       \---com
+|       |           \---franca
+|       |               \---netflix
+|       |                   |   NetflixCloneApplicationTests.java
+|       |                   |   
+|       |                   \---applications
+|       |                       +---config
+|       |                       |       TestSecurityConfig.java
+|       |                       |       UsuarioControllerTestConfig.java
+|       |                       |       
+|       |                       +---controller
+|       |                       |       UsuarioControllerValidationTest.java
+|       |                       |       
+|       |                       +---outro
+|       |                       \---usecases
+|       |                               CadastrarUsuarioUseCaseTest.java
+|       |                               
+|       \---resources
+|           \---mockito-extensions
+|                   org.mockito.plugins.MockMaker
+|                   
+\---target
+    |   netflix-0.0.1-SNAPSHOT.jar
+    |   netflix-0.0.1-SNAPSHOT.jar.original
+    |   
+    +---classes
+    |   |   application-dev.properties
+    |   |   application-hml.properties
+    |   |   application-prod.properties
+    |   |   application-test.properties
+    |   |   application.properties
+    |   |   
+    |   +---br
+    |   |   \---com
+    |   |       \---franca
+    |   |           \---netflix
+    |   |               |   NetflixCloneApplication.class
+    |   |               |   
+    |   |               +---application
+    |   |               |   \---usecase
+    |   |               |           AtualizarUsuarioUseCase.class
+    |   |               |           AuthService.class
+    |   |               |           BuscarUsuarioUseCase.class
+    |   |               |           CadastrarUsuarioUseCase.class
+    |   |               |           InativarUsuarioUseCase.class
+    |   |               |           ListarUsuariosUseCase.class
+    |   |               |           RefreshTokenUseCase.class
+    |   |               |           
+    |   |               +---config
+    |   |               |       JwtProperties.class
+    |   |               |       SecurityConfig.class
+    |   |               |       SwaggerConfig.class
+    |   |               |       
+    |   |               +---domain
+    |   |               |   +---enums
+    |   |               |   |       StatusUsuario.class
+    |   |               |   |       
+    |   |               |   +---exception
+    |   |               |   |       EmailJaCadastradoException.class
+    |   |               |   |       TokenExpiradoException.class
+    |   |               |   |       TokenInvalidoException.class
+    |   |               |   |       UsuarioNaoEncontradoException.class
+    |   |               |   |       
+    |   |               |   +---model
+    |   |               |   |       RefreshToken$RefreshTokenBuilder.class
+    |   |               |   |       RefreshToken.class
+    |   |               |   |       Role$RoleBuilder.class
+    |   |               |   |       Role.class
+    |   |               |   |       Usuario$UsuarioBuilder.class
+    |   |               |   |       Usuario.class
+    |   |               |   |       
+    |   |               |   \---repository
+    |   |               |           RefreshTokenRepository.class
+    |   |               |           RoleRepository.class
+    |   |               |           UsuarioRepository.class
+    |   |               |           
+    |   |               +---infrastructure
+    |   |               |   +---controller
+    |   |               |   |       AuthController.class
+    |   |               |   |       GlobalExceptionHandler.class
+    |   |               |   |       UsuarioController.class
+    |   |               |   |       
+    |   |               |   \---persistence
+    |   |               |       +---entity
+    |   |               |       |       RefreshTokenEntity$RefreshTokenEntityBuilder.class
+    |   |               |       |       RefreshTokenEntity.class
+    |   |               |       |       RoleEntity$RoleEntityBuilder.class
+    |   |               |       |       RoleEntity.class
+    |   |               |       |       UsuarioEntity$UsuarioEntityBuilder.class
+    |   |               |       |       UsuarioEntity.class
+    |   |               |       |       
+    |   |               |       +---impl
+    |   |               |       |       RefreshTokenRepositoryImpl.class
+    |   |               |       |       RoleRepositoryImpl.class
+    |   |               |       |       UsuarioRepositoryImpl.class
+    |   |               |       |       
+    |   |               |       \---jpa
+    |   |               |               RefreshTokenJpaRepository.class
+    |   |               |               RoleJpaRepository.class
+    |   |               |               UsuarioJpaRepository.class
+    |   |               |               
+    |   |               +---interfaces
+    |   |               |   +---dto
+    |   |               |   |       AtualizarUsuarioRequest.class
+    |   |               |   |       JwtResponseDTO.class
+    |   |               |   |       LoginRequest.class
+    |   |               |   |       MensagemResponse.class
+    |   |               |   |       MessageResponseDTO.class
+    |   |               |   |       RefreshTokenRequestDTO.class
+    |   |               |   |       RefreshTokenResponseDTO.class
+    |   |               |   |       UsuarioRequest.class
+    |   |               |   |       UsuarioResponse.class
+    |   |               |   |       
+    |   |               |   \---mapper
+    |   |               |           RefreshTokenMapper.class
+    |   |               |           RoleMapper.class
+    |   |               |           UsuarioMapper.class
+    |   |               |           
+    |   |               \---security
+    |   |                       CustomAccessDeniedHandler.class
+    |   |                       CustomUserDetailsService.class
+    |   |                       JwtAuthenticationFilter.class
+    |   |                       JwtTokenProvider.class
+    |   |                       RequestLoggingFilter.class
+    |   |                       
+    |   \---db
+    |       \---migration
+    |               V10__create_table_refresh_token.sql
+    |               V11__insert_table_roles.sql
+    |               V12__insert_table_user_roles.sql
+    |               V13__insert_table_category.sql
+    |               V1__create_usuarios_and_roles.sql
+    |               V2__create_perfis.sql
+    |               V3__create_categorias_and_filmes.sql
+    |               V4__create_historico_visualizacao.sql
+    |               V5__insert_roles.sql
+    |               V6__add_column_cpf_data_nascimento.sql
+    |               V7__modify_column_data_criacao.sql
+    |               V8__modify_column_dt_criacao.sql
+    |               V9__create_column_ativa.sql
+    |               
+    +---generated-sources
+    |   \---annotations
+    +---generated-test-sources
+    |   \---test-annotations
+    +---maven-archiver
+    |       pom.properties
+    |       
+    +---maven-status
+    |   \---maven-compiler-plugin
+    |       +---compile
+    |       |   \---default-compile
+    |       |           createdFiles.lst
+    |       |           inputFiles.lst
+    |       |           
+    |       \---testCompile
+    |           \---default-testCompile
+    |                   createdFiles.lst
+    |                   inputFiles.lst
+    |                   
+    \---test-classes
+        +---br
+        |   \---com
+        |       \---franca
+        |           \---netflix
+        |               |   NetflixCloneApplicationTests.class
+        |               |   
+        |               \---applications
+        |                   +---config
+        |                   |       TestSecurityConfig.class
+        |                   |       UsuarioControllerTestConfig.class
+        |                   |       
+        |                   +---controller
+        |                   |       UsuarioControllerValidationTest.class
+        |                   |       
+        |                   \---usecases
+        |                           CadastrarUsuarioUseCaseTest.class
+        |                           
+        \---mockito-extensions
+                org.mockito.plugins.MockMaker
+                

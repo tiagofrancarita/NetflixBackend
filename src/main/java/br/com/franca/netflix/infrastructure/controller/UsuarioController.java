@@ -95,7 +95,7 @@ public class UsuarioController {
         return ResponseEntity.ok(buscarUsuarioUseCase.buscarPorNome(nome));
     }
 
-    @PostMapping("/cadastrar")
+    @PostMapping("/cadastrarUsuario")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Cadastro de usuario")
     @ApiResponses(value = {
@@ -103,7 +103,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor"),
             @ApiResponse(responseCode = "400", description = "Erro no cadastro")
     })
-    public ResponseEntity<UsuarioResponse> cadastrar(@RequestBody @Valid UsuarioRequest request) {
+    public ResponseEntity<UsuarioResponse> cadastrarUsuario(@RequestBody @Valid UsuarioRequest request) {
         Usuario novo = Usuario.builder()
                 .nome(request.getNome())
                 .email(request.getEmail())
