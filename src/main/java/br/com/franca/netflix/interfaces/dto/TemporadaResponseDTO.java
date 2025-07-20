@@ -13,6 +13,7 @@ public class TemporadaResponseDTO {
 
     private Long id;
     private String titulo;
+    private String descricao;
     private Integer numero;
     private Long serieId;
     private List<EpisodioResponseDTO> episodios;

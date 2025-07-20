@@ -16,10 +16,7 @@ public class BuscarTemporadaPorIdUseCase {
 
     public Temporada executar(Long id) {
         return temporadaRepository.buscarPorId(id)
-                .orElseThrow(() -> {
-                    log.warn("❌ Temporada com ID {} não encontrada", id);
-                    return new RecursoNaoEncontradoException("Temporada não encontrada");
-                });
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Temporada não encontrada com ID " + id));
     }
 
 }

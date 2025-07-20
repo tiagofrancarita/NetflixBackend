@@ -2,6 +2,7 @@ package br.com.franca.netflix.interfaces.mapper;
 
 import br.com.franca.netflix.domain.model.Temporada;
 import br.com.franca.netflix.infrastructure.persistence.entity.TemporadaEntity;
+import br.com.franca.netflix.interfaces.dto.TemporadaRequestDTO;
 import br.com.franca.netflix.interfaces.dto.TemporadaResponseDTO;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ public class TemporadaMapper {
         return Temporada.builder()
                 .id(temporadaEntity.getId())
                 .titulo(temporadaEntity.getTitulo())
+                .descricao(temporadaEntity.getDescricao())
                 .numero(temporadaEntity.getNumero())
                 .serieId(temporadaEntity.getSerieId())
                 .build();
@@ -25,6 +27,7 @@ public class TemporadaMapper {
                 .id(temporadaDomain.getId())
                 .titulo(temporadaDomain.getTitulo())
                 .numero(temporadaDomain.getNumero())
+                .descricao(temporadaDomain.getDescricao())
                 .serieId(temporadaDomain.getSerieId())
                 .build();
     }
@@ -33,6 +36,7 @@ public class TemporadaMapper {
         return TemporadaResponseDTO.builder()
                 .id(temporadaDomain.getId())
                 .titulo(temporadaDomain.getTitulo())
+                .descricao(temporadaDomain.getDescricao())
                 .numero(temporadaDomain.getNumero())
                 .serieId(temporadaDomain.getSerieId())
                 .build();
@@ -46,5 +50,15 @@ public class TemporadaMapper {
         return entities.stream()
                 .map(this::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    public Temporada toModel(TemporadaRequestDTO temporadaRequestDTO) {
+        return Temporada.builder()
+                .id(temporadaRequestDTO.getId())
+                .titulo(temporadaRequestDTO.getTitulo())
+                .numero(temporadaRequestDTO.getNumero())
+                .descricao(temporadaRequestDTO.getDescricao())
+                .serieId(temporadaRequestDTO.getSerieId())
+                .build();
     }
 }
