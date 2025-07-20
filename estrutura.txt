@@ -42,11 +42,21 @@ D:.
 |   |   |                   +---application
 |   |   |                   |   +---test
 |   |   |                   |   \---usecase
+|   |   |                   |           AtualizarCategoriaUseCase.java
+|   |   |                   |           AtualizarFilmeUseCase.java
 |   |   |                   |           AtualizarUsuarioUseCase.java
 |   |   |                   |           AuthService.java
+|   |   |                   |           BuscarCategoriaUseCase.java
+|   |   |                   |           BuscarFilmeUseCase.java
 |   |   |                   |           BuscarUsuarioUseCase.java
+|   |   |                   |           CadastrarCategoriaUseCase.java
+|   |   |                   |           CadastrarFilmeUseCase.java
 |   |   |                   |           CadastrarUsuarioUseCase.java
+|   |   |                   |           DeletarCategoriaUseCase.java
+|   |   |                   |           DeletarFilmeUseCase.java
 |   |   |                   |           InativarUsuarioUseCase.java
+|   |   |                   |           ListarCategoriasUseCase.java
+|   |   |                   |           ListarFilmesUseCase.java
 |   |   |                   |           ListarUsuariosUseCase.java
 |   |   |                   |           RefreshTokenUseCase.java
 |   |   |                   |           
@@ -58,19 +68,27 @@ D:.
 |   |   |                   +---domain
 |   |   |                   |   +---enums
 |   |   |                   |   |       StatusUsuario.java
+|   |   |                   |   |       TipoMidia.java
 |   |   |                   |   |       
 |   |   |                   |   +---exception
+|   |   |                   |   |       CategoriaJaCadastradaException.java
+|   |   |                   |   |       CategoriaNãoEncontradaException.java
 |   |   |                   |   |       EmailJaCadastradoException.java
+|   |   |                   |   |       FilmeNaoEncontradoException.java
 |   |   |                   |   |       TokenExpiradoException.java
 |   |   |                   |   |       TokenInvalidoException.java
 |   |   |                   |   |       UsuarioNaoEncontradoException.java
 |   |   |                   |   |       
 |   |   |                   |   +---model
+|   |   |                   |   |       Categoria.java
+|   |   |                   |   |       Filme.java
 |   |   |                   |   |       RefreshToken.java
 |   |   |                   |   |       Role.java
 |   |   |                   |   |       Usuario.java
 |   |   |                   |   |       
 |   |   |                   |   \---repository
+|   |   |                   |           CategoriaRepository.java
+|   |   |                   |           FilmeRepository.java
 |   |   |                   |           RefreshTokenRepository.java
 |   |   |                   |           RoleRepository.java
 |   |   |                   |           UsuarioRepository.java
@@ -78,28 +96,42 @@ D:.
 |   |   |                   +---infrastructure
 |   |   |                   |   +---controller
 |   |   |                   |   |       AuthController.java
+|   |   |                   |   |       CategoriaController.java
+|   |   |                   |   |       FilmeController.java
 |   |   |                   |   |       GlobalExceptionHandler.java
 |   |   |                   |   |       UsuarioController.java
 |   |   |                   |   |       
 |   |   |                   |   \---persistence
 |   |   |                   |       +---entity
+|   |   |                   |       |       CategoriaEntity.java
+|   |   |                   |       |       FilmeEntity.java
 |   |   |                   |       |       RefreshTokenEntity.java
 |   |   |                   |       |       RoleEntity.java
 |   |   |                   |       |       UsuarioEntity.java
 |   |   |                   |       |       
 |   |   |                   |       +---impl
+|   |   |                   |       |       CategoriaRepositoryImpl.java
+|   |   |                   |       |       FilmeRepositoryImpl.java
 |   |   |                   |       |       RefreshTokenRepositoryImpl.java
 |   |   |                   |       |       RoleRepositoryImpl.java
 |   |   |                   |       |       UsuarioRepositoryImpl.java
 |   |   |                   |       |       
 |   |   |                   |       \---jpa
+|   |   |                   |               CategoriaJpaRepository.java
+|   |   |                   |               FilmeJpaRepository.java
 |   |   |                   |               RefreshTokenJpaRepository.java
 |   |   |                   |               RoleJpaRepository.java
 |   |   |                   |               UsuarioJpaRepository.java
 |   |   |                   |               
 |   |   |                   +---interfaces
 |   |   |                   |   +---dto
+|   |   |                   |   |       AtualizarCategoriaRequestDTO.java
 |   |   |                   |   |       AtualizarUsuarioRequest.java
+|   |   |                   |   |       CategoriaRequestDTO.java
+|   |   |                   |   |       CategoriaResponseDTO.java
+|   |   |                   |   |       FilmeAtualizacaoDTO.java
+|   |   |                   |   |       FilmeRequestDTO.java
+|   |   |                   |   |       FilmeResponseDTO.java
 |   |   |                   |   |       JwtResponseDTO.java
 |   |   |                   |   |       LoginRequest.java
 |   |   |                   |   |       MensagemResponse.java
@@ -110,6 +142,8 @@ D:.
 |   |   |                   |   |       UsuarioResponse.java
 |   |   |                   |   |       
 |   |   |                   |   \---mapper
+|   |   |                   |           CategoriaMapper.java
+|   |   |                   |           FilmeMapper.java
 |   |   |                   |           RefreshTokenMapper.java
 |   |   |                   |           RoleMapper.java
 |   |   |                   |           UsuarioMapper.java
@@ -134,6 +168,8 @@ D:.
 |   |                   V11__insert_table_roles.sql
 |   |                   V12__insert_table_user_roles.sql
 |   |                   V13__insert_table_category.sql
+|   |                   V14__alter_table_filmes.sql
+|   |                   V15__created_table_temporada_espisodio.sql
 |   |                   V1__create_usuarios_and_roles.sql
 |   |                   V2__create_perfis.sql
 |   |                   V3__create_categorias_and_filmes.sql
@@ -187,11 +223,21 @@ D:.
     |   |               |   
     |   |               +---application
     |   |               |   \---usecase
+    |   |               |           AtualizarCategoriaUseCase.class
+    |   |               |           AtualizarFilmeUseCase.class
     |   |               |           AtualizarUsuarioUseCase.class
     |   |               |           AuthService.class
+    |   |               |           BuscarCategoriaUseCase.class
+    |   |               |           BuscarFilmeUseCase.class
     |   |               |           BuscarUsuarioUseCase.class
+    |   |               |           CadastrarCategoriaUseCase.class
+    |   |               |           CadastrarFilmeUseCase.class
     |   |               |           CadastrarUsuarioUseCase.class
+    |   |               |           DeletarCategoriaUseCase.class
+    |   |               |           DeletarFilmeUseCase.class
     |   |               |           InativarUsuarioUseCase.class
+    |   |               |           ListarCategoriasUseCase.class
+    |   |               |           ListarFilmesUseCase.class
     |   |               |           ListarUsuariosUseCase.class
     |   |               |           RefreshTokenUseCase.class
     |   |               |           
@@ -203,14 +249,22 @@ D:.
     |   |               +---domain
     |   |               |   +---enums
     |   |               |   |       StatusUsuario.class
+    |   |               |   |       TipoMidia.class
     |   |               |   |       
     |   |               |   +---exception
+    |   |               |   |       CategoriaJaCadastradaException.class
+    |   |               |   |       CategoriaNãoEncontradaException.class
     |   |               |   |       EmailJaCadastradoException.class
+    |   |               |   |       FilmeNaoEncontradoException.class
     |   |               |   |       TokenExpiradoException.class
     |   |               |   |       TokenInvalidoException.class
     |   |               |   |       UsuarioNaoEncontradoException.class
     |   |               |   |       
     |   |               |   +---model
+    |   |               |   |       Categoria$CategoriaBuilder.class
+    |   |               |   |       Categoria.class
+    |   |               |   |       Filme$FilmeBuilder.class
+    |   |               |   |       Filme.class
     |   |               |   |       RefreshToken$RefreshTokenBuilder.class
     |   |               |   |       RefreshToken.class
     |   |               |   |       Role$RoleBuilder.class
@@ -219,6 +273,8 @@ D:.
     |   |               |   |       Usuario.class
     |   |               |   |       
     |   |               |   \---repository
+    |   |               |           CategoriaRepository.class
+    |   |               |           FilmeRepository.class
     |   |               |           RefreshTokenRepository.class
     |   |               |           RoleRepository.class
     |   |               |           UsuarioRepository.class
@@ -226,11 +282,17 @@ D:.
     |   |               +---infrastructure
     |   |               |   +---controller
     |   |               |   |       AuthController.class
+    |   |               |   |       CategoriaController.class
+    |   |               |   |       FilmeController.class
     |   |               |   |       GlobalExceptionHandler.class
     |   |               |   |       UsuarioController.class
     |   |               |   |       
     |   |               |   \---persistence
     |   |               |       +---entity
+    |   |               |       |       CategoriaEntity$CategoriaEntityBuilder.class
+    |   |               |       |       CategoriaEntity.class
+    |   |               |       |       FilmeEntity$FilmeEntityBuilder.class
+    |   |               |       |       FilmeEntity.class
     |   |               |       |       RefreshTokenEntity$RefreshTokenEntityBuilder.class
     |   |               |       |       RefreshTokenEntity.class
     |   |               |       |       RoleEntity$RoleEntityBuilder.class
@@ -239,18 +301,30 @@ D:.
     |   |               |       |       UsuarioEntity.class
     |   |               |       |       
     |   |               |       +---impl
+    |   |               |       |       CategoriaRepositoryImpl.class
+    |   |               |       |       FilmeRepositoryImpl.class
     |   |               |       |       RefreshTokenRepositoryImpl.class
     |   |               |       |       RoleRepositoryImpl.class
     |   |               |       |       UsuarioRepositoryImpl.class
     |   |               |       |       
     |   |               |       \---jpa
+    |   |               |               CategoriaJpaRepository.class
+    |   |               |               FilmeJpaRepository.class
     |   |               |               RefreshTokenJpaRepository.class
     |   |               |               RoleJpaRepository.class
     |   |               |               UsuarioJpaRepository.class
     |   |               |               
     |   |               +---interfaces
     |   |               |   +---dto
+    |   |               |   |       AtualizarCategoriaRequestDTO.class
     |   |               |   |       AtualizarUsuarioRequest.class
+    |   |               |   |       CategoriaRequestDTO.class
+    |   |               |   |       CategoriaResponseDTO$CategoriaResponseDTOBuilder.class
+    |   |               |   |       CategoriaResponseDTO.class
+    |   |               |   |       FilmeAtualizacaoDTO.class
+    |   |               |   |       FilmeRequestDTO.class
+    |   |               |   |       FilmeResponseDTO$FilmeResponseDTOBuilder.class
+    |   |               |   |       FilmeResponseDTO.class
     |   |               |   |       JwtResponseDTO.class
     |   |               |   |       LoginRequest.class
     |   |               |   |       MensagemResponse.class
@@ -261,6 +335,8 @@ D:.
     |   |               |   |       UsuarioResponse.class
     |   |               |   |       
     |   |               |   \---mapper
+    |   |               |           CategoriaMapper.class
+    |   |               |           FilmeMapper.class
     |   |               |           RefreshTokenMapper.class
     |   |               |           RoleMapper.class
     |   |               |           UsuarioMapper.class
@@ -278,6 +354,8 @@ D:.
     |               V11__insert_table_roles.sql
     |               V12__insert_table_user_roles.sql
     |               V13__insert_table_category.sql
+    |               V14__alter_table_filmes.sql
+    |               V15__created_table_temporada_espisodio.sql
     |               V1__create_usuarios_and_roles.sql
     |               V2__create_perfis.sql
     |               V3__create_categorias_and_filmes.sql
