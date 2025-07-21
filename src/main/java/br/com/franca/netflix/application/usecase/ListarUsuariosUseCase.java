@@ -21,11 +21,14 @@ public class ListarUsuariosUseCase {
     }
 
     public List<UsuarioResponse> listarTodos() {
-        logger.info("================ Iniciando a listagem de usuarios");
-        var usuarios = usuarioRepository.listarTodos();
-        logger.info("============ usuarios encontrados:  " +usuarios.size());
-        System.out.println("Usuarios encontrados: " + usuarios.size());
-        logger.info("================== Listagem concluida com sucesso.");
-        return usuarioMapper.toResponseList(usuarioRepository.listarTodos());
+        logger.info("================ Iniciando a listagem de usuários ATIVOS");
+
+        var usuariosAtivos = usuarioRepository.listarAtivos();
+
+        logger.info("============ usuários ativos encontrados: " + usuariosAtivos.size());
+        System.out.println("Usuários ativos encontrados: " + usuariosAtivos.size());
+
+        logger.info("================== Listagem concluída com sucesso.");
+        return usuarioMapper.toResponseList(usuariosAtivos);
     }
 }
