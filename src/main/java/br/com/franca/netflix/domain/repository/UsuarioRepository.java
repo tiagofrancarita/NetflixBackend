@@ -12,4 +12,6 @@ public interface UsuarioRepository {
     List<Usuario> buscarPorNome(String nome);
     Optional<Usuario> buscarPorCpf(String cpf);
     List<Usuario> listarTodos();
+    List<Usuario> listarAtivos();
+
 }

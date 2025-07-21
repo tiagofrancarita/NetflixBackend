@@ -22,16 +22,28 @@ public class InativarUsuarioUseCase {
         Usuario usuario = usuarioRepository.buscarPorId(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + id));
 
+        if (usuario.getAtivo() == StatusUsuario.I) {
+            logger.info("Usuário com ID {} já está inativo.", id);
+            return;
+        }
+
         usuario.setAtivo(StatusUsuario.I);
         usuarioRepository.salvar(usuario);
+        logger.info("Usuário com ID {} foi inativado com sucesso.", id);
     }
 
     public void inativarPorCpf(String cpf) {
         Usuario usuario = usuarioRepository.buscarPorCpf(cpf)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado com CPF: " + cpf));
 
+        if (usuario.getAtivo() == StatusUsuario.I) {
+            logger.info("Usuário com CPF {} já está inativo.", cpf);
+            return;
+        }
+
         usuario.setAtivo(StatusUsuario.I);
         usuarioRepository.salvar(usuario);
+        logger.info("Usuário com CPF {} foi inativado com sucesso.", cpf);
     }
 
     public Usuario executar(String email) {
@@ -39,17 +51,14 @@ public class InativarUsuarioUseCase {
                 .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário com e-mail " + email + " não encontrado"));
 
         if (usuario.getAtivo() == StatusUsuario.I) {
-            logger.info("Usuário com e-mail {} já está inativo", email);
+            logger.info("Usuário com e-mail {} já está inativo.", email);
             return usuario;
         }
 
         usuario.setAtivo(StatusUsuario.I);
         Usuario atualizado = usuarioRepository.salvar(usuario);
 
-        logger.info("Usuário com e-mail {} foi inativado", email);
-
+        logger.info("Usuário com e-mail {} foi inativado com sucesso.", email);
         return atualizado;
     }
-
-
 }

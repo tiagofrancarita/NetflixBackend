@@ -126,7 +126,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioresponse);
     }
 
-    @PutMapping("/{email}/inativarEmail")
+    @PutMapping("inativarEmail/{email}")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Inativa um usuário pelo e-mail")
     @ApiResponses(value = {
@@ -139,7 +139,7 @@ public class UsuarioController {
         return ResponseEntity.ok(new MensagemResponse("Usuário inativado com sucesso."));
     }
 
-    @PutMapping("/{id}/inativarPorId")
+    @PutMapping("/inativarPorId/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Inativa um usuário pelo id")
     @ApiResponses(value = {
@@ -151,7 +151,7 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{cpf}/inativarPorCpf")
+    @PutMapping("/inativarPorCpf/{cpf}")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Inativa um usuário pelo cpf")
     @ApiResponses(value = {
