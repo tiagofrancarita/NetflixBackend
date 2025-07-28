@@ -67,9 +67,10 @@ public class SecurityConfig  {
                                         "/v3/api-docs/**",
                                         "/webjars/**"
                                 ).permitAll()
+                                .requestMatchers("/usuarios/cadastrarUsuario").permitAll()
+                                .requestMatchers("/actuator/prometheus").permitAll()
                                 .requestMatchers("/usuarios/listarTodos").hasRole("ADMIN") // só ADMIN pode listar todos
                                 .requestMatchers("/usuarios/buscarPorId/**").hasAnyRole("ADMIN", "USER") // ADMIN e USER
-                                .requestMatchers("/usuarios/cadastrar").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -1,0 +1,77 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: MNGCC-04xRcxS3EWw7dz
+      MYSQL_DATABASE: netflix_dsv
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - netflix-network
+
+  mysqld_exporter:
+    image: prom/mysqld-exporter:v0.14.0
+    container_name: mysqld_exporter
+    environment:
+      DATA_SOURCE_NAME: root:MNGCC-04xRcxS3EWw7dz@tcp(mysql:3306)/netflix_dsv
+    ports:
+      - "9104:9104"
+    depends_on:
+      - mysql
+    networks:
+      - netflix-network
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alert.rules.yml:/etc/prometheus/alert.rules.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - mysqld_exporter
+    networks:
+      - netflix-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - netflix-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: netflix_app
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/netflix_dsv
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: MNGCC-04xRcxS3EWw7dz
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+    networks:
+      - netflix-network
+    restart: always
+
+volumes:
+  mysql-data:
+  grafana-storage:
+
+networks:
+  netflix-network:
+    driver: bridge

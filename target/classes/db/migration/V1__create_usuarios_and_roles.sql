@@ -2,9 +2,12 @@
 CREATE TABLE usuarios (
                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
                           nome VARCHAR(100) NOT NULL,
+                          cpf VARCHAR(100) NOT NULL UNIQUE,
                           email VARCHAR(100) NOT NULL UNIQUE,
                           senha VARCHAR(255) NOT NULL,
-                          data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                          data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                          data_nascimento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                          ativo CHAR(1) NOT NULL  DEFAULT 'A'
 );
 
 -- Tabela de roles (ex: ADMIN, USER)

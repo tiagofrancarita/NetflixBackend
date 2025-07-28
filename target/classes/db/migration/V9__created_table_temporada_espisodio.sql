@@ -1,8 +1,10 @@
 -- Tabela de Temporadas
 CREATE TABLE temporadas (
                             id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                            titulo VARCHAR(255) NOT NULL,
                             numero INT NOT NULL,
                             serie_id BIGINT NOT NULL, -- Só associar se for do tipo 'SERIE'
+                            descricao VARCHAR(255) NOT NULL,
                             CONSTRAINT fk_temporada_serie
                                 FOREIGN KEY (serie_id)
                                     REFERENCES filmes(id)

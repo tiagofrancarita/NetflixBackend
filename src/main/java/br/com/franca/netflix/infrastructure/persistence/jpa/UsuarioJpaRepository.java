@@ -2,13 +2,14 @@ package br.com.franca.netflix.infrastructure.persistence.jpa;
 
 import br.com.franca.netflix.infrastructure.persistence.entity.UsuarioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UsuarioJpaRepository extends JpaRepository<UsuarioEntity, Long> {
+public interface UsuarioJpaRepository extends JpaRepository<UsuarioEntity, Long>, JpaSpecificationExecutor<UsuarioEntity> {
 
     Optional<UsuarioEntity> findByEmail(String email);
     boolean existsByEmail(String email);

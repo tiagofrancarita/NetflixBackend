@@ -2,10 +2,7 @@ package br.com.franca.netflix.infrastructure.controller;
 
 import br.com.franca.netflix.application.usecase.*;
 import br.com.franca.netflix.domain.model.Usuario;
-import br.com.franca.netflix.interfaces.dto.AtualizarUsuarioRequest;
-import br.com.franca.netflix.interfaces.dto.MensagemResponse;
-import br.com.franca.netflix.interfaces.dto.UsuarioRequest;
-import br.com.franca.netflix.interfaces.dto.UsuarioResponse;
+import br.com.franca.netflix.interfaces.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -33,6 +30,31 @@ public class UsuarioController {
         this.listarUsuariosUseCase = listarUsuariosUseCase;
         this.buscarUsuarioUseCase = buscarUsuarioUseCase;
     }
+
+    @GetMapping("/usuarios/listarComFiltro")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<PageDTO<UsuarioResponse>> listarUsuariosComFiltro(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) Boolean ativo,
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "10") int tamanho,
+            @RequestParam(defaultValue = "nome") String ordenacao,
+            @RequestParam(defaultValue = "ASC") String direcao
+    ) {
+        UsuarioFiltroDTO filtro = new UsuarioFiltroDTO();
+        filtro.setNome(nome);
+        filtro.setAtivo(ativo);
+
+        PaginacaoDTO paginacao = new PaginacaoDTO();
+        paginacao.setPagina(pagina);
+        paginacao.setTamanho(tamanho);
+        paginacao.setOrdenacao(ordenacao);
+        paginacao.setDirecao(direcao);
+
+        PageDTO<UsuarioResponse> resultado = listarUsuariosUseCase.listarComFiltroPaginacao(filtro, paginacao);
+        return ResponseEntity.ok(resultado);
+    }
+
 
     @GetMapping("/listarTodos")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -163,14 +185,14 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("atualizar/{id}")
+    @PutMapping("atualizarUsuarioPorID/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Atualiza um usuário pelo ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Atualização bem-sucedida"),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor"),
             @ApiResponse(responseCode = "400", description = "Erro na atualização")})
-    public ResponseEntity<UsuarioResponse> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizarUsuarioRequest request) {
+    public ResponseEntity<UsuarioResponse> atualizarUsuarioPorID(@PathVariable Long id, @RequestBody @Valid AtualizarUsuarioRequest request) {
         UsuarioResponse response = atualizarUsuarioUseCase.executar(id, request);
         return ResponseEntity.ok(response);
     }

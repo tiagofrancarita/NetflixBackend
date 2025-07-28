@@ -1,1 +1,0 @@
-ALTER TABLE temporadas ADD COLUMN titulo VARCHAR(255);

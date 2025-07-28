@@ -41,6 +41,7 @@ public class FilmeEntity {
     private String videoUrl;
 
     @Column(nullable = false)
-    private String duracao;
+    @Builder.Default
+    private String duracao = "00:00:00";
 
 }
