@@ -26,7 +26,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
 
-
     public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider, CustomUserDetailsService customUserDetailsService) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.customUserDetailsService = customUserDetailsService;
@@ -34,8 +33,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+                                    HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        String contextPath = request.getContextPath(); // geralmente "/netflix"
+        String path = request.getRequestURI().substring(contextPath.length());
+        if (path.startsWith("/actuator")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         String header = request.getHeader("Authorization");
         logger.info("Authorization header: {}", header);
@@ -51,13 +56,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
                     logger.info("UserDetails username: {}, authorities: {}", userDetails.getUsername(), userDetails.getAuthorities());
 
-                    var authoritiesFromToken = jwtTokenProvider.getAuthoritiesFromToken(token);
-                    logger.info("Authorities extraídas do token: {}", authoritiesFromToken);
-
-                    // Usar as autoridades do UserDetails (mais seguro)
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
 
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
